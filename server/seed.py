@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+from app import app
+from models import db, Environment, Power, Build, Character
+
 
 # Standard library imports
 from random import randint, choice as rc
