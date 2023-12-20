@@ -4,7 +4,8 @@
 
 # Remote library imports
 from flask import request
-from flask_restful import Resource
+from flask_restful import Api, Resource
+from models import db, Environment, Power, Build, Character, Attribute
 
 # Local imports
 from config import app, db, api
@@ -20,4 +21,11 @@ def index():
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
+
+api = Api(app)
+    
+class AllEnvironments(Resource):
+    
+    def get(self):
+        
 
