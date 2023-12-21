@@ -18,7 +18,7 @@ function App() {
       <Quest/>
     </main>
     <footer>
-
+      <h3> this is the footer</h3>
     </footer>
     </>
     
