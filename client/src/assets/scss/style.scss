@@ -1,0 +1,93 @@
+body {
+    display: flex;
+}
+
+form {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    left: 70%;
+    border: 5px solid #000;
+    top: 40%;
+    width: 25%;
+    height: 25%;
+
+    label {
+        margin-bottom: 5px;
+    }
+
+    input {
+        width: auto;
+        margin-bottom: 10px;
+    }
+
+    input[type="submit"] {
+        width: auto;
+        margin-top: 10px;
+    }
+}
+
+// #create {
+//     background-color: yellow;
+// }
+
+#region {
+    position: absolute;
+    margin: auto;
+    width: 50%;
+    height: 98%;
+    border: 5px solid #000;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: -1;
+}
+
+#eyes, #ears, #arms, #mouth, #body, #legs {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+#eyes {
+    top: 20%;
+    left: 35%;
+}
+
+#ears {
+    top: 0%;
+    left: 30%;
+    z-index: -1;
+}
+
+#arms {
+    top: 30%;
+    left: 13%;
+    z-index: -1;
+}
+
+#mouth {
+    top: 40%;
+    left: 40%;
+}
+
+#legs {
+    top: 55%;
+    left: 30%;
+    z-index: -1;
+}
+
+#body {
+    top: 9%;
+    left: 25%;
+}
+
+$items: ("ears": 9, "eyes": 9, "arms": 9, "mouth": 9, "body": 7, "legs": 8, "region": 4);
+@each $item, $total in $items {
+    @for $i from 1 through $total {
+        .#{$item}#{$i} {
+            background-image: url(../imgs/#{$item}/#{$item}#{$i}.png);
+            background-repeat: no-repeat;
+        }
+    }
+}

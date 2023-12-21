@@ -1,28 +1,25 @@
-import React, { useEffect, useState } from "react";
-import { Switch, Route } from "react-router-dom";
+import React from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Navbar from "./Navbar";
 import Home from "../pages/home";
 import Create from "../pages/create";
 import Quest from "../pages/quest";
 
-
 function App() {
-  
-  return(
-    <>
-    <header>
-      <h1>Project Client</h1>
-    </header>
-    <main>
-      <Home/>
-      <Create/>
-      <Quest/>
-    </main>
-    <footer>
-      <h3> this is the footer</h3>
-    </footer>
-    </>
-    
-  
+  return (
+    <Router>
+      <>
+        <Navbar />
+        <main>
+          <Switch>
+            <Route path="/" exact component={Home} />
+            <Route path="/create" component={Create} />
+            <Route path="/quest" component={Quest} />
+          </Switch>
+        </main>
+        <footer></footer>
+      </>
+    </Router>
   );
 }
 
