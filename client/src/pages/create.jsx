@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
+import CharacterForm from "../components/CharacterForm";
+import { TextField, Button, Container, Typography, Box } from '@mui/material';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import MoodBadIcon from '@mui/icons-material/MoodBad';
@@ -85,7 +85,8 @@ function Create() {
 
     return (
         <div id="create">
-            <form onSubmit={handleSubmit}>
+            <CharacterForm onSubmit={handleSubmit} />
+            {/* <form onSubmit={handleSubmit}>
                 <label>Character Name</label>
                 <input placeholder="Character Name..."></input>
 
@@ -96,7 +97,7 @@ function Create() {
                 <input placeholder="Character Region..."></input>
 
                 <input type="submit" value="Finish Creation" />
-            </form>
+            </form> */}
 
             <div id="region" className={`region${dressupState.region.current + 1}`}>
                 <div id="body" className={`body${dressupState.body.current + 1}`}></div>
