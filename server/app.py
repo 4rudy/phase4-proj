@@ -134,6 +134,13 @@ class AllPowers(Resource):
         return make_response(response, 200)
 api.add_resource(AllPowers, '/powers')
 
+class AllRegions(Resource):
+    def get(self):
+        regions = Region.query.all()
+        response = jsonify([region.to_dict() for region in regions])
+        return make_response(response, 200)
+api.add_resource(AllRegions, '/regions')
+
 @app.route('/')
 def index():
     return '<h1>Project Server</h1>'

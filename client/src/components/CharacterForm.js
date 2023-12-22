@@ -92,8 +92,6 @@ function CharacterForm({ onSubmit, dressupState }) {
                         helperText={formik.touched.name && formik.errors.name}
                     />
 
-                    {/* Add a dropdown select for choosing power */}
-                    <InputLabel htmlFor="power-select">Character Power</InputLabel>
                     <Select
                         fullWidth
                         label="Character Power"

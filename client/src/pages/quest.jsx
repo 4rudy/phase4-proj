@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import QuestMiniGame from "../components/QuestMiniGame";
 import Button from "@mui/material/Button";
+import { useParams } from "react-router-dom";
 import "./quest.css";
 
 function Quest() {
     const [clickedArea, setClickedArea] = useState(null);
     const [isQuestAreaVisible, setIsQuestAreaVisible] = useState(true);
+    const { id, name } = useParams();
 
     const handleDivClick = (area) => {
         setClickedArea(area);
@@ -20,12 +22,25 @@ function Quest() {
         window.location.href = "/";
     };
 
-    const handleRestartDemo = () => {
-        window.location.href = "/create";
+    const handleRestartDemo = async () => {
+        try {
+            const response = await fetch(`http://localhost:5555/characters/${id}`, {
+                method: 'DELETE',
+            });
+
+            if (!response.ok) {
+                console.error('Failed to delete character');
+                return;
+            }
+
+            window.location.href = "/create";
+        } catch (error) {
+            console.error('Error during character deletion:', error);
+        }
     };
 
     const handleViewWinners = () => {
-        window.location.href = "/";
+        window.location.href = "/winners";
     };
 
     return (
@@ -115,7 +130,6 @@ function Quest() {
                             VIEW WINNERS
                         </Button>
                     </div>
-
                 </div>
             </div>
         </div>
