@@ -46,15 +46,19 @@ function QuestMiniGame({ area }) {
     }else{
         dead=false
     }
+    
     useEffect(() => {
-        
         getArea(area)
         
-        setHue(currentBoss)
-
-        // console.log(`current boss hp is: ${currentBoss}`)
-        
       },[area]);
+
+      useEffect(() => {
+        setHue(currentBoss)
+      },[currentBoss]);
+    
+        
+      
+    
   const handleScrollButtonClick = (spell) => {
     if (spellCasted === false) {
       console.log(`Spell Cast: ${spell}`);
