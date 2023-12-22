@@ -78,14 +78,32 @@ function Create() {
         setDressupState(updatedState);
     }
 
-    function handleSubmit(event) {
-        event.preventDefault();
-        console.log("Form submitted!");
+    async function handleSubmit(formData) {
+        try {
+            const response = await fetch('http://localhost:5555/characters', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                console.error('Error:', errorData);
+            } else {
+                const responseData = await response.json();
+                console.log('Character created:', responseData);
+                // Optionally, you can redirect or perform other actions upon successful submission
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
     }
 
     return (
         <div id="create">
-            <CharacterForm onSubmit={handleSubmit} />
+            <CharacterForm onSubmit={handleSubmit} dressupState={dressupState} />
 
             <div id="region" className={`region${dressupState.region.current + 1}`}>
                 <div id="body" className={`body${dressupState.body.current + 1}`}></div>
