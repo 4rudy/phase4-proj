@@ -113,7 +113,7 @@ function Quest() {
                         >
                             END DEMO
                         </Button>
-                        <Button
+                        {/* <Button
                             variant="contained"
                             color="secondary"
                             onClick={handleViewWinners}
@@ -128,7 +128,7 @@ function Quest() {
                             }}
                         >
                             VIEW WINNERS
-                        </Button>
+                        </Button> */}
                     </div>
                 </div>
             </div>
