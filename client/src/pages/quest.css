@@ -1,0 +1,11 @@
+/* quest.css */
+:root {
+    --action-button-bg: #FF5733;
+}
+
+.action-button {
+    padding: 20px;
+    font-size: 2rem;
+    background-color: var(--action-button-bg);
+    border-radius: 50px;
+}

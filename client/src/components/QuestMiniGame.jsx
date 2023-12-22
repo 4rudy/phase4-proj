@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-function QuestMiniGame({ area }) {
+function QuestMiniGame({ area, onBossDefeat }) {
   const [spellCasted, setSpellCasted] = useState(false);
   const [isAttacking, setIsAttacking] = useState(false);
   const [xPos, setXPos] = useState(0);
@@ -9,6 +9,9 @@ function QuestMiniGame({ area }) {
   const [desertbossHealth, setDesertBossHealth] = useState(100);
   const [junglebossHealth, setJungleBossHealth] = useState(100);
   const [worldbossHealth, setWorldBossHealth] = useState(100);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [selectedPower, setSelectedPower] = useState(null);
+  const [powers, setPowers] = useState([]);
   const [hue,setHue]=useState(100)
   const [currentBoss,setCurretBoss]=useState("null")
     let dead
@@ -20,8 +23,26 @@ function QuestMiniGame({ area }) {
         dead=false
     }
     if(area){
-        
+
     }
+  useEffect(() => {
+    // Fetch powers from the database when the component mounts
+    const fetchPowers = async () => {
+      try {
+        const response = await fetch("http://localhost:5555/powers");
+        if (!response.ok) {
+          throw new Error("Failed to fetch powers");
+        }
+        const data = await response.json();
+        setPowers(data);
+      } catch (error) {
+        console.error("Error fetching powers:", error);
+      }
+    };
+
+    fetchPowers();
+  }, []);
+
   const handleScrollButtonClick = (spell) => {
     if (spellCasted === false) {
       console.log(`Spell Cast: ${spell}`);
@@ -42,38 +63,50 @@ function QuestMiniGame({ area }) {
     switch (area) {
       case "Winter":
         setCurretBoss(winterbossHealth+10);
-        
+
         return setWinterBossHealth((prevHealth) => Math.max(0, prevHealth - 20));
       case "Desert":
         setCurretBoss(desertbossHealth+10);
-        
+
         return setDesertBossHealth((prevHealth) => Math.max(0, prevHealth - 20));
       case "Lava":
         setCurretBoss(firebossHealth+10);
-        
+
         return setFireBossHealth((prevHealth) => Math.max(0, prevHealth - 20));
       case "Jungle":
         setCurretBoss(junglebossHealth+10);
-        
+
         return setJungleBossHealth((prevHealth) => Math.max(0, prevHealth - 20));
       default:
         setCurretBoss(worldbossHealth+10);
-        
+
         return setWorldBossHealth((prevHealth) => Math.max(0, prevHealth - 20));
     }
   }
 
-  function castSpell() {
-    
+  function castSpell(power) {
+    onBossDefeat(area);
+    setSelectedPower(power);
+    setIsMenuOpen(true);
+
+
     setHue(currentBoss)
     getWizardType(area);
-    
+
 
     // Reduce boss health when a spell is cast
     setTimeout(() => {
       setSpellCasted(false); // Reset SpellCasted after the delay
     }, 500);
   }
+
+  const handleMenuSelect = (power) => {
+    // Perform actions based on the selected power
+    console.log(`Selected power: ${power}`);
+
+    // Close the menu
+    setIsMenuOpen(false);
+  };
 
   // Define bossdivStyle within the render function
   const bossdivStyle = {
@@ -118,6 +151,20 @@ function QuestMiniGame({ area }) {
           <button onClick={() => handleScrollButtonClick("Vine")}>Vine Scroll</button>
         </div>
       )}
+
+      {isMenuOpen && (
+        <div id="powerMenu">
+          <h2>Choose a new power:</h2>
+          <ul>
+            {powers.map((power) => (
+              <li key={power.id} onClick={() => handleMenuSelect(power.name)}>
+                {power.name}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
     </div>
   );
 }

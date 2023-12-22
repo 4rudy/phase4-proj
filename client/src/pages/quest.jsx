@@ -1,57 +1,127 @@
 import React, { useState } from "react";
 import QuestMiniGame from "../components/QuestMiniGame";
+import Button from "@mui/material/Button";
+import "./quest.css";
 
 function Quest() {
-  const [clickedArea, setClickedArea] = useState(null);
-  const [isQuestAreaVisible, setIsQuestAreaVisible] = useState(true);
+    const [clickedArea, setClickedArea] = useState(null);
+    const [isQuestAreaVisible, setIsQuestAreaVisible] = useState(true);
 
-  const handleDivClick = (area) => {
-    setClickedArea(area);
-    console.log(`Clicked on ${area} area`);
-    
-    // You can perform any other actions or state updates here
-  };
+    const handleDivClick = (area) => {
+        setClickedArea(area);
+        console.log(`Clicked on ${area} area`);
 
-  return (
-    <div id="container">
-      <div id="questScroll">
-        <img src="https://i.imgur.com/BlLXW6a.png" alt="quest scroll"></img>
-      </div>
+        // You can perform any other actions or state updates here
+    };
 
-      <div id="Winter" onClick={() => handleDivClick("Winter")}>
-        <img src="https://i.imgur.com/LdNM2ce.png" alt="Winter"></img>
-      </div>
+    const handleStartOver = () => {
+        setClickedArea(null);
+    };
 
-      <div id="Jungle" onClick={() => handleDivClick("Jungle")}>
-        <img src="https://i.imgur.com/SaImjSH.png" alt="Jungle"></img>
-      </div>
+    const handleQuitDemo = () => {
+        window.location.href = "/";
+    };
 
-      <div id="Lava" onClick={() => handleDivClick("Lava")}>
-        <img src="https://i.imgur.com/bgcXE4Y.png" alt="Lava"></img>
-      </div>
+    const handleRestartDemo = () => {
+        window.location.href = "/create";
+    };
 
-      <div id="Desert" onClick={() => handleDivClick("Desert")}>
-        <img src="https://i.imgur.com/aQPPVTW.png" alt="Desert"></img>
-      </div>
+    const handleViewWinners = () => {
+        window.location.href = "/";
+    };
 
-      <div id="World" onClick={() => handleDivClick("World")}>
-        <img src="https://i.imgur.com/ONLCghH.png" alt="World"></img>
-      </div>
+    return (
+        <div id="container">
+            <div id="questScroll">
+                <img src="https://i.imgur.com/BlLXW6a.png" alt="quest scroll"></img>
+            </div>
 
-      <div id="selection">
-        {isQuestAreaVisible && clickedArea !== null ? <></> : (
-          <h1>Select Region to quest in...</h1>
-        )}
-        <div>
-            <div id="powers">
-            <QuestMiniGame
-                area={clickedArea} 
-            />
+            <div id="Winter" onClick={() => handleDivClick("Winter")}>
+                <img src="https://i.imgur.com/LdNM2ce.png" alt="Winter"></img>
+            </div>
+
+            <div id="Jungle" onClick={() => handleDivClick("Jungle")}>
+                <img src="https://i.imgur.com/SaImjSH.png" alt="Jungle"></img>
+            </div>
+
+            <div id="Lava" onClick={() => handleDivClick("Lava")}>
+                <img src="https://i.imgur.com/bgcXE4Y.png" alt="Lava"></img>
+            </div>
+
+            <div id="Desert" onClick={() => handleDivClick("Desert")}>
+                <img src="https://i.imgur.com/aQPPVTW.png" alt="Desert"></img>
+            </div>
+
+            <div id="World" onClick={() => handleDivClick("World")}>
+                <img src="https://i.imgur.com/ONLCghH.png" alt="World"></img>
+            </div>
+
+            <div id="selection">
+                {isQuestAreaVisible && clickedArea !== null ? (
+                    <></>
+                ) : (
+                    <h1>Select Region to quest in...</h1>
+                )}
+                <div>
+                    <div id="powers">
+                        <QuestMiniGame area={clickedArea} />
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <Button
+                            variant="contained"
+                            onClick={handleRestartDemo}
+                            style={{
+                                position: 'absolute',
+                                padding: '10px',
+                                fontSize: '1rem',
+                                backgroundColor: '#3450ed',
+                                borderRadius: '45px',
+                                bottom: '-250px',
+                                right: '-250px',
+                            }}
+                        >
+                            RESTART DEMO
+                        </Button>
+                        <Button
+                            variant="contained"
+                            color="secondary"
+                            onClick={handleQuitDemo}
+                            style={{
+                                position: 'absolute',
+                                padding: '10px',
+                                fontSize: '1rem',
+                                backgroundColor: '#FF5733',
+                                borderRadius: '45px',
+                                bottom: '-250px',
+                                right: '-100px',
+                            }}
+                        >
+                            END DEMO
+                        </Button>
+                        <Button
+                            variant="contained"
+                            color="secondary"
+                            onClick={handleViewWinners}
+                            style={{
+                                position: 'absolute',
+                                padding: '10px',
+                                fontSize: '1rem',
+                                backgroundColor: '#3a692e',
+                                borderRadius: '45px',
+                                bottom: '-250px',
+                                right: '-400px',
+                            }}
+                        >
+                            VIEW WINNERS
+                        </Button>
+                    </div>
+
+                </div>
             </div>
         </div>
-      </div>
-    </div>
-  );
+    );
 }
 
 export default Quest;
