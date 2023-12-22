@@ -21,8 +21,8 @@ import '../assets/scss/style.scss';
 function Create() {
     const calculateNextHeight = (index) => 200 + index * 80;
     const [dressupState, setDressupState] = useState({
-        eyes: { current: 0, total: 9 },
         ears: { current: 0, total: 9 },
+        eyes: { current: 0, total: 9 },
         mouth: { current: 0, total: 9 },
         arms: { current: 0, total: 9 },
         body: { current: 0, total: 7 },
@@ -78,26 +78,32 @@ function Create() {
         setDressupState(updatedState);
     }
 
-    function handleSubmit(event) {
-        event.preventDefault();
-        console.log("Form submitted!");
+    async function handleSubmit(formData) {
+        try {
+            const response = await fetch('http://localhost:5555/characters', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                console.error('Error:', errorData);
+            } else {
+                const responseData = await response.json();
+                console.log('Character created:', responseData);
+                // Optionally, you can redirect or perform other actions upon successful submission
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
     }
 
     return (
         <div id="create">
-            <CharacterForm onSubmit={handleSubmit} />
-            {/* <form onSubmit={handleSubmit}>
-                <label>Character Name</label>
-                <input placeholder="Character Name..."></input>
-
-                <label>Character Power</label>
-                <input placeholder="Character Power..."></input>
-
-                <label>Character Region</label>
-                <input placeholder="Character Region..."></input>
-
-                <input type="submit" value="Finish Creation" />
-            </form> */}
+            <CharacterForm onSubmit={handleSubmit} dressupState={dressupState} />
 
             <div id="region" className={`region${dressupState.region.current + 1}`}>
                 <div id="body" className={`body${dressupState.body.current + 1}`}></div>
