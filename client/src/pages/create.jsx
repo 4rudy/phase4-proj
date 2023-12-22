@@ -1,5 +1,8 @@
 import React, { useState } from "react";
+import { useHistory } from 'react-router-dom';
 import CharacterForm from "../components/CharacterForm";
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
 import { TextField, Button, Container, Typography, Box } from '@mui/material';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -19,6 +22,8 @@ import ShuffleIcon from '@mui/icons-material/Shuffle';
 import '../assets/scss/style.scss';
 
 function Create() {
+    const [error, setError] = useState(null);
+    const history = useHistory();
     const calculateNextHeight = (index) => 200 + index * 80;
     const [dressupState, setDressupState] = useState({
         ears: { current: 0, total: 9 },
@@ -94,7 +99,7 @@ function Create() {
             } else {
                 const responseData = await response.json();
                 console.log('Character created:', responseData);
-                // Optionally, you can redirect or perform other actions upon successful submission
+                history.push('/quest');
             }
         } catch (error) {
             console.error('Error:', error);
