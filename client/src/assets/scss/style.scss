@@ -78,6 +78,131 @@ form {
     left: 25%;
 }
 
+#World {
+    position: absolute;
+    top: 104px;
+    left: 84px;
+    z-index: 0;
+    background-color: #1e659b;
+
+}
+#Winter{
+    position: absolute;
+    top: 147.05px;
+    left: 107.29px;
+    z-index: 1;
+    transform: scale(1.01);
+    
+}
+
+#questName{
+    position: relative;
+    top: 539px;
+    left: 409px;
+}
+#questScroll{
+    transform: scale(0.6);
+    position: absolute;
+    top: -76px;
+    left: 691px;
+}
+#Desert{
+    position: absolute;
+    top: 555.8px;
+    left: 583.75px;
+    z-index: 1;
+    transform: scale(1);
+    
+}
+#Jungle{
+    position: absolute;
+    top: 465.2px;
+    left: 123.1px;
+    z-index: 1;
+}
+#Lava{
+    position: absolute;
+    top: 326.6px;
+    left: 659.13px;
+    z-index: 1;
+}
+#selection{
+    position: absolute;
+    top: 320px;
+    left:1050px;
+    z-index: 5;
+    transform: scale(0.9);
+
+}
+#selectQuest{
+    position: relative;
+    top: 24px;
+    left: 1px;
+}
+#questArea{
+    max-width: 373px;
+    max-height: 236px;
+    display: grid;
+    align-content: center;
+    justify-content: space-evenly;
+}
+
+#wizard{
+    transform: scale(0.13);
+    position: relative;
+    top: 82px;
+    left: -131px;
+
+}
+#player{
+    position: relative;
+    top: -571px;
+    left: 443px;
+    transform: scale(0.8);
+}
+
+#Winter:hover{
+    transform: scale(1.1);
+}
+#Jungle:hover{
+    transform: scale(1.1);
+}
+#Lava:hover{
+    transform: scale(1.1);
+}
+#Desert:hover{
+    transform:translate3d();
+    transform: scale(1.1);
+}
+
+#container{
+    transform: scale(1.05);
+}
+#attack{
+    position: absolute;
+    width: 100px;
+    height: auto;
+    transform: rotate(99deg);
+    top: 36px;
+    left: 195px;
+    z-index: -1;
+}
+#token{
+    position: absolute;
+    z-index: 4;
+    left: 176px;
+    width: 70px;
+    height: auto;
+}
+#bosshp{
+    min-width: 1015px;
+    background-color: red;
+    position: absolute;
+    top: 1040px;
+    left: 49px;
+}
+
+
 $items: ("ears": 9, "eyes": 9, "arms": 9, "mouth": 9, "body": 7, "legs": 8, "region": 4);
 @each $item, $total in $items {
     @for $i from 1 through $total {
