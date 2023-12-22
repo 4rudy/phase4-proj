@@ -15,7 +15,31 @@ build_attribute_association = db.Table(
     db.Column('attribute_id', db.Integer, db.ForeignKey('attributes.id'), primary_key=True)
 )
 
-class Region(db.Model, SerializerMixin):
+class SerializerMixinWithExclusions(SerializerMixin):
+    def to_dict(self, depth=1, include_name=False):
+        if depth <= 0:
+            return {'id': self.id, 'name': self.name} if include_name else {'id': self.id}
+        else:
+            result = {'id': self.id, 'name': self.name} if include_name else {'id': self.id}
+
+            for key, value in self.__dict__.items():
+                if key == 'name':  # Skip the 'name' attribute
+                    continue
+
+                # Skip attributes starting with an underscore (e.g., relationships)
+                if key.startswith('_'):
+                    continue
+
+                # Check if the attribute is an instance of SQLAlchemy model
+                if isinstance(value, db.Model):
+                    result[key] = value.to_dict(depth=depth-1)
+                else:
+                    result[key] = value
+
+            return result
+
+
+class Region(db.Model, SerializerMixinWithExclusions):
     __tablename__ = 'regions'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
@@ -27,7 +51,10 @@ class Region(db.Model, SerializerMixin):
     characters = db.relationship("Character", back_populates="region")
     power = db.relationship('Power', secondary='power_regions_association', uselist=False, back_populates='region')
 
-class Power(db.Model, SerializerMixin):
+    def __repr__(self):
+        return f"<Region #: {self.id}, Name: {self.name} >"
+
+class Power(db.Model, SerializerMixinWithExclusions):
     __tablename__ ='powers'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
@@ -38,7 +65,7 @@ class Power(db.Model, SerializerMixin):
     characters = db.relationship('Character', back_populates='power')  # one-to-many with character
     region = db.relationship('Region', back_populates='power', uselist=False)  # one-to-one with region
 
-class Build(db.Model, SerializerMixin):
+class Build(db.Model, SerializerMixinWithExclusions):
     __tablename__ = 'builds'
     id =  db.Column(db.Integer, primary_key=True)
     ears = db.Column(db.Integer)
@@ -53,7 +80,7 @@ class Build(db.Model, SerializerMixin):
     attributes = db.relationship('Attribute', secondary=build_attribute_association, back_populates='builds')  # many-to-many with Attribute
     characters = db.relationship('Character', back_populates='build')  # many to one with Character
 
-class Character(db.Model, SerializerMixin):
+class Character(db.Model, SerializerMixinWithExclusions):
     __tablename__ = 'characters'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
@@ -65,7 +92,7 @@ class Character(db.Model, SerializerMixin):
     power = db.relationship('Power', back_populates='characters')  # one-to-many with power
     region = db.relationship("Region", back_populates="characters")  # one-to-one with region
 
-class Attribute(db.Model, SerializerMixin):
+class Attribute(db.Model, SerializerMixinWithExclusions):
     __tablename__ = 'attributes'
     id = db.Column(db.Integer, primary_key=True)
     category = db.Column(db.String)
