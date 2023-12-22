@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from "react";
 
-function QuestMiniGame({ area }) {
+function QuestMiniGame({ area, onBossDefeat }) {
   const [spellCasted, setSpellCasted] = useState(false);
   const [isAttacking, setIsAttacking] = useState(false);
   const [xPos, setXPos] = useState(0);
@@ -9,6 +9,9 @@ function QuestMiniGame({ area }) {
   const [desertbossHealth, setDesertBossHealth] = useState(100);
   const [junglebossHealth, setJungleBossHealth] = useState(100);
   const [worldbossHealth, setWorldBossHealth] = useState(100);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [selectedPower, setSelectedPower] = useState(null);
+  const [powers, setPowers] = useState([]);
   const [hue,setHue]=useState(100)
   const [currentBoss,setCurretBoss]=useState("null")
   const [areaChange,setAreaChange]=useState("")
@@ -42,7 +45,7 @@ function QuestMiniGame({ area }) {
     if(currentBoss && currentBoss<=10){
         console.log(`the current boss is dead${currentBoss}`)
         dead = true
-        
+
     }else{
         dead=false
     }
@@ -79,37 +82,46 @@ function QuestMiniGame({ area }) {
     switch (area) {
       case "Winter":
         setCurretBoss(winterbossHealth+10);
-        
+
         return setWinterBossHealth((prevHealth) => Math.max(0, prevHealth - 20));
       case "Desert":
         setCurretBoss(desertbossHealth+10);
-        
+
         return setDesertBossHealth((prevHealth) => Math.max(0, prevHealth - 20));
       case "Lava":
         setCurretBoss(firebossHealth+10);
-        
+
         return setFireBossHealth((prevHealth) => Math.max(0, prevHealth - 20));
       case "Jungle":
         setCurretBoss(junglebossHealth+10);
-        
+
         return setJungleBossHealth((prevHealth) => Math.max(0, prevHealth - 20));
       default:
         setCurretBoss(worldbossHealth+10);
-        
+
         return setWorldBossHealth((prevHealth) => Math.max(0, prevHealth - 20));
     }
   }
 
   function castSpell() {
-    getWizardType(area);
+
     setHue(currentBoss)
-    
+    getWizardType(area);
+
 
     // Reduce boss health when a spell is cast
     setTimeout(() => {
       setSpellCasted(false); // Reset SpellCasted after the delay
     }, 500);
   }
+
+  const handleMenuSelect = (power) => {
+    // Perform actions based on the selected power
+    console.log(`Selected power: ${power}`);
+
+    // Close the menu
+    setIsMenuOpen(false);
+  };
 
   // Define bossdivStyle within the render function
   const bossdivStyle = {
@@ -154,6 +166,20 @@ function QuestMiniGame({ area }) {
           <button onClick={() => handleScrollButtonClick("Vine")}>Vine Scroll</button>
         </div>
       )}
+
+      {isMenuOpen && (
+        <div id="powerMenu">
+          <h2>Choose a new power:</h2>
+          <ul>
+            {powers.map((power) => (
+              <li key={power.id} onClick={() => handleMenuSelect(power.name)}>
+                {power.name}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
     </div>
   );
 }

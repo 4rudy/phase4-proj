@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { useHistory } from 'react-router-dom';
 import CharacterForm from "../components/CharacterForm";
 import { TextField, Button, Container, Typography, Box } from '@mui/material';
+import HomeIcon from '@mui/icons-material/Home';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import MoodBadIcon from '@mui/icons-material/MoodBad';
@@ -13,12 +15,14 @@ import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
 import AccessibilityNewIcon from '@mui/icons-material/AccessibilityNew';
 import ElderlyIcon from '@mui/icons-material/Elderly';
 import ElderlyWomanIcon from '@mui/icons-material/ElderlyWoman';
-import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 import CropOriginalIcon from '@mui/icons-material/CropOriginal';
+import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 import ShuffleIcon from '@mui/icons-material/Shuffle';
 import '../assets/scss/style.scss';
 
 function Create() {
+    const [error, setError] = useState(null);
+    const history = useHistory();
     const calculateNextHeight = (index) => 200 + index * 80;
     const [dressupState, setDressupState] = useState({
         ears: { current: 0, total: 9 },
@@ -37,6 +41,10 @@ function Create() {
         body: { prev: <ElderlyWomanIcon />, next: <ElderlyIcon /> },
         legs: { prev: <AirlineSeatLegroomReducedIcon />, next: <AirlineSeatLegroomExtraIcon /> },
         region: { prev: <InsertPhotoIcon />, next: <CropOriginalIcon /> },
+    };
+    const handleGoHome = () => {
+        // Redirect to the home page
+        history.push('/');
     };
 
     function next(item) {
@@ -94,7 +102,7 @@ function Create() {
             } else {
                 const responseData = await response.json();
                 console.log('Character created:', responseData);
-                // Optionally, you can redirect or perform other actions upon successful submission
+                history.push('/quest');
             }
         } catch (error) {
             console.error('Error:', error);
@@ -155,6 +163,17 @@ function Create() {
                 onClick={() => randomize()}
             >
                 RANDOMIZE
+            </Button>
+            <Button
+                variant="contained"
+                startIcon={<HomeIcon />}
+                style={{
+                    position: 'absolute',
+                    top: '20px',
+                    right: '20px',
+                }}
+                onClick={handleGoHome}
+            >
             </Button>
         </div>
     );
