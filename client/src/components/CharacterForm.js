@@ -6,7 +6,7 @@ function CharacterForm({ handleSubmit }) {
         <form onSubmit={handleSubmit}>
             <Container maxWidth="sm">
                 <Typography variant="h4" align="center" gutterBottom>
-                    Character Creation
+                    Character Info
                 </Typography>
 
                 <Box sx={{ '& .MuiTextField-root': { marginBottom: 2 } }}>
@@ -36,7 +36,7 @@ function CharacterForm({ handleSubmit }) {
                 </Box>
 
                 <Button type="submit" variant="contained" color="primary" fullWidth>
-                    Finish Creation
+                    Create Character
                 </Button>
             </Container>
         </form>

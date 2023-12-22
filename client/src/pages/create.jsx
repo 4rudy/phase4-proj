@@ -21,8 +21,8 @@ import '../assets/scss/style.scss';
 function Create() {
     const calculateNextHeight = (index) => 200 + index * 80;
     const [dressupState, setDressupState] = useState({
-        eyes: { current: 0, total: 9 },
         ears: { current: 0, total: 9 },
+        eyes: { current: 0, total: 9 },
         mouth: { current: 0, total: 9 },
         arms: { current: 0, total: 9 },
         body: { current: 0, total: 7 },
@@ -86,18 +86,6 @@ function Create() {
     return (
         <div id="create">
             <CharacterForm onSubmit={handleSubmit} />
-            {/* <form onSubmit={handleSubmit}>
-                <label>Character Name</label>
-                <input placeholder="Character Name..."></input>
-
-                <label>Character Power</label>
-                <input placeholder="Character Power..."></input>
-
-                <label>Character Region</label>
-                <input placeholder="Character Region..."></input>
-
-                <input type="submit" value="Finish Creation" />
-            </form> */}
 
             <div id="region" className={`region${dressupState.region.current + 1}`}>
                 <div id="body" className={`body${dressupState.body.current + 1}`}></div>
