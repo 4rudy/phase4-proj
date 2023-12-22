@@ -7,7 +7,7 @@ function Quest() {
 
   const handleDivClick = (area) => {
     setClickedArea(area);
-    console.log(`Clicked on ${area} area`);
+    // console.log(`Clicked on ${area} area`);
     
     // You can perform any other actions or state updates here
   };

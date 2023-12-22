@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 
 function QuestMiniGame({ area }) {
   const [spellCasted, setSpellCasted] = useState(false);
@@ -11,17 +11,50 @@ function QuestMiniGame({ area }) {
   const [worldbossHealth, setWorldBossHealth] = useState(100);
   const [hue,setHue]=useState(100)
   const [currentBoss,setCurretBoss]=useState("null")
+  const [areaChange,setAreaChange]=useState("")
     let dead
+
+    function getArea(area) {
+        switch (area) {
+          case "Winter":
+            setCurretBoss(winterbossHealth + 10);
+            setHue(winterbossHealth);
+            return setAreaChange("Winter");
+          case "Desert":
+            setCurretBoss(desertbossHealth + 10);
+            setHue(desertbossHealth);
+            return setAreaChange("Desert");
+          case "Lava":
+            setCurretBoss(firebossHealth + 10);
+            setHue(firebossHealth);
+            return setAreaChange("Lava");
+          case "Jungle":
+            setCurretBoss(junglebossHealth + 10);
+            setHue(junglebossHealth);
+            return setAreaChange("Jungle");
+          default:
+            setCurretBoss(worldbossHealth + 10);
+            setHue(worldbossHealth);
+            return setAreaChange("World");
+        }
+      }
 
     if(currentBoss && currentBoss<=10){
         console.log(`the current boss is dead${currentBoss}`)
         dead = true
+        
     }else{
         dead=false
     }
-    if(area){
+    useEffect(() => {
         
-    }
+        getArea(area)
+        
+        setHue(currentBoss)
+
+        // console.log(`current boss hp is: ${currentBoss}`)
+        
+      },[area]);
   const handleScrollButtonClick = (spell) => {
     if (spellCasted === false) {
       console.log(`Spell Cast: ${spell}`);
@@ -64,9 +97,8 @@ function QuestMiniGame({ area }) {
   }
 
   function castSpell() {
-    
-    setHue(currentBoss)
     getWizardType(area);
+    setHue(currentBoss)
     
 
     // Reduce boss health when a spell is cast
@@ -122,7 +154,7 @@ function QuestMiniGame({ area }) {
   );
 }
 
-function getWizardImageSrc(area,hp) {
+function getWizardImageSrc(area) {
   switch (area) {
     case "Winter":
       return "https://i.imgur.com/7Kgk9Eb.png";
