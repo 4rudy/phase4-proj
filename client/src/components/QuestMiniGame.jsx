@@ -49,9 +49,19 @@ function QuestMiniGame({ area, onBossDefeat }) {
     }else{
         dead=false
     }
-    if(area){
+    
+    useEffect(() => {
+        getArea(area)
+        
+      },[area]);
 
-    }
+      useEffect(() => {
+        setHue(currentBoss)
+      },[currentBoss]);
+    
+        
+      
+    
   const handleScrollButtonClick = (spell) => {
     if (spellCasted === false) {
       console.log(`Spell Cast: ${spell}`);
